@@ -7,9 +7,7 @@ options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
-# FIXED: Use .version() instead of version=
-driver = webdriver.Chrome(ChromeDriverManager().version("114.0.5735.90").install(), options=options)
-
+driver = webdriver.Chrome(ChromeDriverManager(version="114.0.5735.90").install(), options=options)
 try:
     driver.get("http://localhost:5000/")
     assert "ToDo" in driver.page_source
