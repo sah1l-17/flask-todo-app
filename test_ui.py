@@ -3,11 +3,11 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 options = Options()
-options.add_argument('--headless')  # No UI
+options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome(ChromeDriverManager(version="114.0.5735.90").install(), options=options)
 
 try:
     driver.get("http://localhost:5000/")
