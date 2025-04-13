@@ -4,7 +4,13 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/sah1l-17/flask-todo-app.git'
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/main']],
+                          userRemoteConfigs: [[
+                              url: 'https://github.com/sah1l-17/flask-todo-app.git',
+                              credentialsId: 'github-token'
+                          ]]
+                ])
             }
         }
 
