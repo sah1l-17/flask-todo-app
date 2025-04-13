@@ -4,20 +4,16 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/main']],
-                          userRemoteConfigs: [[
-                              url: 'https://github.com/sah1l-17/flask-todo-app.git',
-                              credentialsId: 'github-token'
-                          ]]
-                ])
+                checkout scm  // 👈 Simplified checkout
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("flask-todo-app")
+                    docker.build("flask-todo-app").inside("--network host") {
+                        // Optional: Run tests inside the container
+                    }
                 }
             }
         }
@@ -25,7 +21,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    dockerImage.run("-d -p 5000:5000")
+                    docker.image("flask-todo-app").run("-d -p 5000:5000")
                 }
             }
         }
